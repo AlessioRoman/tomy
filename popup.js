@@ -11,6 +11,8 @@ window.onload = () => {
   setPomodoro();
 };
 
+startBtn.addEventListener("click", start);
+
 function setPomodoro() {
   minuteDisplay.innerHTML = "25";
   secondDisplay.innerHTML = "00";
@@ -26,19 +28,27 @@ function setLong() {
   secondDisplay.innerHTML = "00";
 }
 
-function start() {
-  let timerFunction = () => {
-    let min = parseInt(minuteDisplay);
-    let sec = parseInt(secondDisplay);
+function timerFunction(min, sec) {
+  sec -= 1;
 
-    sec = sec - 1;
+  console.log(sec);
 
-    if (sec === 0) {
-      min = min - 1;
-
-      sec = 59;
+  if (sec === 0) {
+    sec = 59;
+    if (min < 0) {
+      //alert
+    } else {
+      min -= 1;
     }
-  };
+  }
 
-  setInterval(timerFunction, 1000);
+  minuteDisplay.innerHTML = String(min);
+  secondDisplay.innerHTML = String(sec);
+}
+
+function start() {
+  let mins = parseInt(minuteDisplay);
+  let secs = parseInt(secondDisplay);
+
+  setInterval(timerFunction(mins, secs), 1000);
 }
